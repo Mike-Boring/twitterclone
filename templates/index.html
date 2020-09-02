@@ -1,21 +1,28 @@
 {% extends 'base.html' %} {% block content %}
 <br />
-<div align="right">
-  <a href="/login/" class="btn btn-primary">Login</a>&nbsp;<a
-    href="/logout/"
-    class="btn btn-primary"
-    >Logout</a
-  >{% if not request.user.is_authenticated %}&nbsp;<a
-    href="/signup/"
-    class="btn btn-primary"
-    >Signup</a
-  >{% endif %}
-</div>
-{% if request.user.is_authenticated %}
-<h1>
-  Welcome, you are logged in as
-  <a href="user/{{ request.user.id }}/">{{ request.user.username }}</a>.
-</h1>
+{% include "menu.html" %} {% if request.user.is_authenticated %}
+<table>
+  <tr>
+    <td style="padding: 20px; vertical-align: top">
+      {% include "profile.html" %}
+    </td>
+    <td style="padding: 20px; vertical-align: top">
+      <h2>Whats happenning, {{ request.user.username }}?</h2>
+      {% for tweet in all_tweets %}
+      <h3>
+        <span class="small"
+          ><a href="user/{{ tweet.twitter_user.id }}/"
+            >@{{ tweet.twitter_user }}</a
+          >
+          - <a href="tweet/{{ tweet.id }}/">{{tweet.submission_time}}</a></span
+        ><br />
+        {{ tweet.body }}
+      </h3>
+      {% endfor %}
+    </td>
+  </tr>
+</table>
+
 <br />
 {% else %}
 <h1>Welcome.You are not logged in</h1>

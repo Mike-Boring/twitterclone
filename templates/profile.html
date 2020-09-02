@@ -1,0 +1,15 @@
+<div class="card">
+  <div class="card-header">
+    <h1>
+      {{ request.user.first_name }} {{ request.user.last_name }}
+      <br /><span class="small">
+        <a href="/user/{{ request.user.id }}/">@{{ request.user.username}}</a>
+      </span>
+    </h1>
+  </div>
+  <div class="card-body">
+    <h4 class="card-text">Tweets: {{ number_tweets }}</h4>
+    <h4>Following:</h4>
+    <a href="/logout/" class="btn btn-primary">Logout</a>
+  </div>
+</div>

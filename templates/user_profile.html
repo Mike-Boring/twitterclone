@@ -1,16 +1,14 @@
 {% extends 'base.html' %} {% block content %}
 <br />
-{% include "menu.html" %} {% if request.user.is_authenticated %}
+{% include "menu.html" %}
 <table>
   <tr>
     <td style="padding: 20px; vertical-align: top">
       {% include "profile.html" %}
     </td>
     <td style="padding: 20px; vertical-align: top">
-      {% if not tweet %}
-      <h1>The tweet you are looking for does not exist.</h1>
-      {% else %}
-      <h2>Tweet Details</h2>
+      <h2>My Tweets</h2>
+      {% for tweet in user_tweets %}
       <h3>
         <span class="small"
           ><a href="/user/{{ tweet.twitter_user.id }}/"
@@ -20,9 +18,10 @@
         ><br />
         {{ tweet.body }}
       </h3>
-      {% endif %}
+      {% endfor %}
     </td>
   </tr>
 </table>
-{% endif %}{% endblock %}
+
 <br />
+{% endblock %}
