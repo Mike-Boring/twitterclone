@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% block content %}
+<br />
+<div align="right">
+  <a href="/" class="btn btn-primary">Home</a>&nbsp;<a
+    href="/login/"
+    class="btn btn-primary"
+    >Login</a
+  >&nbsp;<a href="/logout/" class="btn btn-primary">Logout</a>
+</div>
+{% if not tweet %}
+<h1>The ticket you are looking for does not exist.</h1>
+{% else %}
+<h3>Tweet: {{ tweet }}</h3>
+<h3>Username: @{{ tweet.twitter_user }}</h3>
+<h3>Time: {{ tweet.submission_time }}</h3>
+
+{% endif %} {% endblock %}

@@ -5,7 +5,11 @@
     href="/logout/"
     class="btn btn-primary"
     >Logout</a
-  >
+  >{% if not request.user.is_authenticated %}&nbsp;<a
+    href="/signup/"
+    class="btn btn-primary"
+    >Signup</a
+  >{% endif %}
 </div>
 {% if request.user.is_authenticated %}
 <h1>
