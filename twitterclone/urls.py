@@ -16,13 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from authentication.views import login_view, logout_view
+from authentication.views import login_view, logout_view, signup_view
 
 from twitteruser.views import index
 
 urlpatterns = [
     path('', index, name='homeview'),
     path('login/', login_view, name='loginview'),
+    path('signup/', signup_view, name='signupview'),
     path('logout/', logout_view, name='logoutview'),
     path('admin/', admin.site.urls),
 ]
