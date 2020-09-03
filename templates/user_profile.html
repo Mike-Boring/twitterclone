@@ -7,7 +7,10 @@
       {% include "profile.html" %}
     </td>
     <td style="padding: 20px; vertical-align: top">
-      <h2>My Tweets</h2>
+      <h2>
+        <a href="/user/{{ selected_user.id }}/">@{{ selected_user }}</a>'s
+        Tweets
+      </h2>
       {% for tweet in user_tweets %}
       <h3>
         <span class="small"

@@ -26,4 +26,4 @@ def add_tweet_view(request):
 def tweet_detail_view(request, tweet_id):
     number_tweets = len(Tweet.objects.filter(twitter_user=request.user.id))
     my_tweet = Tweet.objects.filter(id=tweet_id).first()
-    return render(request, "tweet_detail.html", {"tweet": my_tweet, "number_tweets": number_tweets})
+    return render(request, "tweet_detail.html", {"tweet": my_tweet, "number_tweets": number_tweets, "profile_user": request.user})
