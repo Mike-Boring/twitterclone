@@ -20,7 +20,7 @@ def login_view(request):
                 return HttpResponseRedirect(request.GET.get('next', reverse("homeview")))
 
     form = LoginForm()
-    return render(request, "generic_form.html", {"form": form})
+    return render(request, "login_page.html", {"form": form})
 
 
 def logout_view(request):
@@ -39,4 +39,4 @@ def signup_view(request):
             return HttpResponseRedirect(reverse("homeview"))
 
     form = SignupForm()
-    return render(request, "generic_form.html", {"form": form})
+    return render(request, "signup_page.html", {"form": form})

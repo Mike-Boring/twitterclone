@@ -20,7 +20,7 @@ def add_tweet_view(request):
             return HttpResponseRedirect(reverse("tweetview", args=[new_tweet.id]))
 
     form = TweetForm()
-    return render(request, "generic_form.html", {"form": form})
+    return render(request, "add_tweet.html", {"form": form, "profile_user": request.user})
 
 
 def tweet_detail_view(request, tweet_id):

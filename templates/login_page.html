@@ -1,15 +1,12 @@
 {% extends 'base.html' %} {% block content %}
 <br />
-{% include "menu.html" %} {% if request.user.is_authenticated %}
+{% include "menu.html" %}
 <table>
   <tr>
-    <td style="padding: 20px; vertical-align: top">
-      {% include "profile.html" %}
-    </td>
     <td style="padding: 20px; vertical-align: top">
       {% include "generic_form.html" %}
     </td>
   </tr>
 </table>
-{% endif %}{% endblock %}
+{% endblock %}
 <br />

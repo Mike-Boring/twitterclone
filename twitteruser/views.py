@@ -11,7 +11,7 @@ def index(request):
 
 
 def user_detail_view(request, user_id):
-    number_tweets = len(Tweet.objects.filter(twitter_user=request.user.id))
+    number_tweets = len(Tweet.objects.filter(twitter_user=user_id))
     selected_user = TwitterUser.objects.filter(id=user_id).first()
     user_tweets = Tweet.objects.filter(
         twitter_user=user_id).order_by('submission_time').reverse()
