@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% block content %}
+<br />
+{% include "menu.html" %}
+<table>
+  <tr>
+    <td style="padding: 20px; vertical-align: top">
+      <div class="card">
+        <div class="card-header">
+          <h1>
+            {{ request.user.first_name }} {{ request.user.last_name }}
+            <br /><span class="small">
+              <a href="/user/{{ profile_user.id }}/"
+                >@{{ request.user.username}}</a
+              >
+            </span>
+          </h1>
+        </div>
+        <div class="card-body">
+          <h4 class="card-text">Tweets: {{ number_tweets }}</h4>
+          <h4>Following:</h4>
+          <a href="/logout/" class="btn btn-primary">Logout</a>
+        </div>
+      </div>
+    </td>
+    <td style="padding: 20px; vertical-align: top">
+      {% for tweet in notification_tweet %}
+      <h3>
+        <span class="small"
+          ><a href="/user/{{ tweet.tweeted_user.id}}/"
+            >@{{ tweet.tweeted_user }}</a
+          >
+          -
+          <a href="/tweet/{{ tweet.notification_tweets.id }}/"
+            >{{tweet.notification_tweets.submission_time}}</a
+          ></span
+        ><br />
+        {{ tweet }}
+      </h3>
+      {% endfor %}
+    </td>
+  </tr>
+</table>
+{% endblock %}
+<br />
