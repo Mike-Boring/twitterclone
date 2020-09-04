@@ -22,4 +22,12 @@ def notification_view(request, user_id):
         return ''
 
     # user_notifications.delete()
-    return render(request, "notifications.html", {"user_notifications": user_notifications, "notification_tweet": notification_tweet, "number_tweets": number_tweets, "profile_user": request.user, "number_notifications": number_notifications, "delete_info": delete_info})
+    return render(
+        request, "notifications.html",
+        {"user_notifications": user_notifications,
+         "notification_tweet": notification_tweet,
+         "number_tweets": number_tweets,
+         "profile_user": request.user,
+         "number_notifications": number_notifications,
+         "delete_info": delete_info}
+    )

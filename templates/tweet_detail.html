@@ -1,10 +1,11 @@
 {% extends 'base.html' %} {% block content %}
 <br />
-{% include "menu.html" %} {% if request.user.is_authenticated %}
+{% include "menu.html" %}
 <table>
   <tr>
     <td style="padding: 20px; vertical-align: top">
-      {% include "profile.html" %}
+      {% if request.user.is_authenticated %} {% include "profile.html" %}
+      {%endif %}
     </td>
     <td style="padding: 20px; vertical-align: top">
       {% if not tweet %}
@@ -24,5 +25,4 @@
     </td>
   </tr>
 </table>
-{% endif %}{% endblock %}
-<br />
+{% endblock %}
