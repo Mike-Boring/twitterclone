@@ -1,6 +1,25 @@
 {% extends 'base.html' %} {% block content %}
 <br />
-{% include "menu.html" %}
+<div align="right">
+  <a href="/" class="btn btn-primary">Home</a>&nbsp;
+  <a href="/login/" class="btn btn-primary">Login</a>&nbsp;<a
+    href="/logout/"
+    class="btn btn-primary"
+    >Logout</a
+  >{% if not request.user.is_authenticated %}&nbsp;<a
+    href="/signup/"
+    class="btn btn-primary"
+    >Signup</a
+  >{% endif %}{% if request.user.is_authenticated %}&nbsp;<a
+    href="/addtweet/"
+    class="btn btn-primary"
+    >Add Tweet</a
+  >&nbsp;<a
+    href="/user/{{ request.user.id }}/notifications"
+    class="btn btn-primary"
+    >Notifications - {{ number_notifications }}</a
+  >{% endif %}
+</div>
 <table>
   <tr>
     <td style="padding: 20px; vertical-align: top">
@@ -41,5 +60,5 @@
     </td>
   </tr>
 </table>
-{% endblock %}
 <br />
+{{delete_info}} {% endblock %}

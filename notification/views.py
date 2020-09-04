@@ -17,4 +17,9 @@ def notification_view(request, user_id):
 
     number_notifications = len(notification_tweet)
 
-    return render(request, "notifications.html", {"user_notifications": user_notifications, "notification_tweet": notification_tweet, "number_tweets": number_tweets, "profile_user": request.user, "number_notifications": number_notifications})
+    def delete_info():
+        user_notifications.delete()
+        return ''
+
+    # user_notifications.delete()
+    return render(request, "notifications.html", {"user_notifications": user_notifications, "notification_tweet": notification_tweet, "number_tweets": number_tweets, "profile_user": request.user, "number_notifications": number_notifications, "delete_info": delete_info})
