@@ -23,11 +23,12 @@
       </div>
     </td>
     <td style="padding: 20px; vertical-align: top">
+      <h2>Notifications</h2>
       {% for tweet in notification_tweet %}
       <h3>
         <span class="small"
-          ><a href="/user/{{ tweet.tweeted_user.id}}/"
-            >@{{ tweet.tweeted_user }}</a
+          ><a href="/user/{{ tweet.notification_tweets.twitter_user.id}}/"
+            >@{{ tweet.notification_tweets.twitter_user }}</a
           >
           -
           <a href="/tweet/{{ tweet.notification_tweets.id }}/"
