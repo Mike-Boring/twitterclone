@@ -1,10 +1,11 @@
 from django.shortcuts import render
-
+from django.contrib.auth.decorators import login_required
 from tweet.models import Tweet
 from twitteruser.models import TwitterUser
 from notification.models import Notification
 
 
+@login_required
 def index(request):
     number_tweets = len(Tweet.objects.filter(twitter_user=request.user.id))
     all_tweets = Tweet.objects.all().order_by('submission_time').reverse()

@@ -7,7 +7,7 @@ from twitteruser.models import TwitterUser
 
 class Tweet(models.Model):
     twitter_user = models.ForeignKey(TwitterUser, on_delete=models.CASCADE)
-    body = models.CharField(max_length=240)
+    body = models.CharField(max_length=140)
     submission_time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
