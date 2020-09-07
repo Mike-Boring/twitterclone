@@ -1,0 +1,14 @@
+table {
+  width: 100%;
+}
+td {
+  border: 2px solid lightgray;
+  padding: 20px;
+  vertical-align: top;
+}
+.profile_td {
+  width: 25%;
+}
+.main_td {
+  width: 75%;
+}

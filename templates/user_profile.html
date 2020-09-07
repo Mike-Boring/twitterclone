@@ -1,9 +1,10 @@
 {% extends 'base.html' %} {% block content %}
 <br />
 {% include "menu.html" %}
+<br /><br />
 <table>
   <tr>
-    <td style="padding: 20px; vertical-align: top">
+    <td class="profile_td">
       {% include "profile.html" %}
       <br />
       {% if request.user.is_authenticated and relationship_status %}
@@ -20,7 +21,7 @@
       >
       {% endif %}
     </td>
-    <td style="padding: 20px; vertical-align: top">
+    <td class="main_td">
       <h2>
         <a href="/user/{{ selected_user.id }}/">@{{ selected_user }}</a>'s
         Tweets

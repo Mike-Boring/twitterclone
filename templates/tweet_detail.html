@@ -1,13 +1,14 @@
 {% extends 'base.html' %} {% block content %}
 <br />
 {% include "menu.html" %}
+<br /><br />
 <table>
   <tr>
-    <td style="padding: 20px; vertical-align: top">
+    <td class="profile_td">
       {% if request.user.is_authenticated %} {% include "profile.html" %}
       {%endif %}
     </td>
-    <td style="padding: 20px; vertical-align: top">
+    <td class="main_td">
       {% if not tweet %}
       <h1>The tweet you are looking for does not exist.</h1>
       {% else %}

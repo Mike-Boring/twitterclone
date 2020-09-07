@@ -8,6 +8,7 @@ class TwitterUser(AbstractUser):
     relationships = models.ManyToManyField('self', through='Relationship',
                                            symmetrical=False,
                                            related_name='related_to')
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
 
 class Relationship(models.Model):

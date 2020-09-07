@@ -1,9 +1,10 @@
 {% extends 'base.html' %} {% block content %}
 <br />
 {% include "menu.html" %}
+<br><br>
 <table>
   <tr>
-    <td style="padding: 20px; vertical-align: top">
+    <td class="profile_td">
       <div class="card">
         <div class="card-header">
           <h1>
@@ -22,7 +23,7 @@
         </div>
       </div>
     </td>
-    <td style="padding: 20px; vertical-align: top">
+    <td class="main_td">
       <h2>Notifications</h2>
       {% if notification_tweet != '' %} {% for tweet in notification_tweet %}
       <h3>
