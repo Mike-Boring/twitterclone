@@ -8,23 +8,14 @@
     </td>
     <td style="padding: 20px; vertical-align: top">
       <h2>Whats happenning, {{ request.user.username }}?</h2>
-      {% for tweet in all_tweets %}
+      {% for tweet in combined_tweets %}
       <h3>
         <span class="small"
           ><a href="user/{{ tweet.twitter_user.id }}/"
             >@{{ tweet.twitter_user }}</a
           >
-          - <a href="tweet/{{ tweet.id }}/">{{tweet.submission_time}}</a></span
-        ><br />
-        {{ tweet.body }}
-      </h3>
-      {% endfor %} {% for tweet in follow_tweets %}
-      <h3>
-        <span class="small"
-          ><a href="user/{{ tweet.twitter_user.id }}/"
-            >@{{ tweet.twitter_user }}</a
-          >
-          - <a href="tweet/{{ tweet.id }}/">{{tweet.submission_time}}</a></span
+          -
+          <a href="tweet/{{ tweet.id }}/">{{tweet.submission_time}}</a></span
         ><br />
         {{ tweet.body }}
       </h3>

@@ -11,22 +11,26 @@ from twitteruser.models import Relationship
 def index(request):
     number_tweets = len(Tweet.objects.filter(twitter_user=request.user.id))
     user_tweets = Tweet.objects.filter(
-        twitter_user=request.user.id).order_by('submission_time').reverse()
+        twitter_user=request.user.id)
 
     if Relationship.objects.filter(from_person=request.user):
         relationship_list = Relationship.objects.filter(
             from_person=request.user)
 
-        all_follow_tweets = []
+        all_follow_tweets = user_tweets
         for relationship in relationship_list:
-            all_follow_tweets.append(Tweet.objects.filter(
-                twitter_user=relationship.to_person))
+            next_tweet = Tweet.objects.filter(
+                twitter_user=relationship.to_person)
+            all_follow_tweets = all_follow_tweets | next_tweet
         follow_tweets = all_follow_tweets
         number_following = len(Relationship.objects.filter(
             from_person=request.user))
+        combined_tweets = all_follow_tweets.distinct().order_by(
+            'submission_time').reverse()
     else:
         follow_tweets = ""
         number_following = 0
+        combined_tweets = user_tweets
 
     number_notifications = 0
     if request.user.is_authenticated:
@@ -38,6 +42,7 @@ def index(request):
             notification_tweet = ''
 
         number_notifications = len(notification_tweet)
+    # breakpoint()
 
     return render(
         request, "index.html",
@@ -46,7 +51,8 @@ def index(request):
          "follow_tweets": follow_tweets,
          "profile_user": request.user,
          "number_notifications": number_notifications,
-         "number_following": number_following}
+         "number_following": number_following,
+         "combined_tweets": combined_tweets}
     )
 
 
