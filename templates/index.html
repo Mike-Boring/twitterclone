@@ -18,6 +18,16 @@
         ><br />
         {{ tweet.body }}
       </h3>
+      {% endfor %} {% for tweet in follow_tweets %}
+      <h3>
+        <span class="small"
+          ><a href="user/{{ tweet.twitter_user.id }}/"
+            >@{{ tweet.twitter_user }}</a
+          >
+          - <a href="tweet/{{ tweet.id }}/">{{tweet.submission_time}}</a></span
+        ><br />
+        {{ tweet.body }}
+      </h3>
       {% endfor %}
     </td>
   </tr>

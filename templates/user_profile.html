@@ -6,8 +6,18 @@
     <td style="padding: 20px; vertical-align: top">
       {% include "profile.html" %}
       <br />
-      {% if request.user.is_authenticated and request.user != selected_user%}
-      <a href="/" class="btn btn-success">Follow @{{ selected_user }}</a>
+      {% if request.user.is_authenticated and relationship_status %}
+      <a
+        href="/user/removefollow/{{selected_user.username}}"
+        class="btn btn-success"
+        >UnFollow @{{ selected_user }}</a
+      >
+      {% else %}
+      <a
+        href="/user/addfollow/{{selected_user.username}}"
+        class="btn btn-success"
+        >Follow @{{ selected_user }}</a
+      >
       {% endif %}
     </td>
     <td style="padding: 20px; vertical-align: top">
