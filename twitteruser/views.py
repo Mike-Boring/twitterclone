@@ -71,15 +71,21 @@ def user_detail_view(request, user_id):
     user_tweets = Tweet.objects.filter(
         twitter_user=user_id).order_by('submission_time').reverse()
 
-    if Relationship.objects.filter(
-            to_person=user_id, from_person=request.user):
-        relationship_status = True
-        number_following = len(Relationship.objects.filter(
-            from_person=user_id))
+    if request.user.id == user_id:
+        if Relationship.objects.filter(from_person=request.user):
+            number_following = len(Relationship.objects.filter(
+                from_person=request.user))
 
+        else:
+            number_following = 0
     else:
-        relationship_status = False
-        number_following = 0
+        if Relationship.objects.filter(
+                to_person=user_id, from_person=request.user):
+            number_following = len(Relationship.objects.filter(
+                from_person=user_id))
+
+        else:
+            number_following = 0
 
     return render(
         request, "user_profile.html",
@@ -88,7 +94,6 @@ def user_detail_view(request, user_id):
          "user_tweets": user_tweets,
          "profile_user": selected_user,
          "number_notifications": number_notifications,
-         "relationship_status": relationship_status,
          "number_following": number_following}
     )
 
