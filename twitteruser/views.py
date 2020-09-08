@@ -55,51 +55,39 @@ def index(request):
     )
 
 
-def user_detail_view(request, user_id):
-    number_notifications = 0
-    if request.user.is_authenticated:
-        user_notifications = Notification.objects.filter(
-            tweeted_user=request.user)
-        if len(user_notifications) > 0:
-            notification_tweet = user_notifications
+class UserDetailView(View):
+    def get(self, request, user_id):
+        number_notifications = 0
+        if request.user.is_authenticated:
+            user_notifications = Notification.objects.filter(
+                tweeted_user=request.user)
+            if len(user_notifications) > 0:
+                notification_tweet = user_notifications
+            else:
+                notification_tweet = ''
+            number_notifications = len(notification_tweet)
+        number_tweets = len(Tweet.objects.filter(twitter_user=user_id))
+        selected_user = TwitterUser.objects.filter(id=user_id).first()
+        user_tweets = Tweet.objects.filter(
+            twitter_user=user_id).order_by('submission_time').reverse()
+        if Relationship.objects.filter(
+                to_person=user_id, from_person=request.user):
+            relationship_status = True
+            number_following = len(Relationship.objects.filter(
+                from_person=user_id))
         else:
-            notification_tweet = ''
-        number_notifications = len(notification_tweet)
-
-    number_tweets = len(Tweet.objects.filter(twitter_user=user_id))
-    selected_user = TwitterUser.objects.filter(id=user_id).first()
-    user_tweets = Tweet.objects.filter(
-        twitter_user=user_id).order_by('submission_time').reverse()
-
-    if Relationship.objects.filter(
-            to_person=user_id, from_person=request.user):
-        relationship_status = True
-        number_following = len(Relationship.objects.filter(
-            from_person=user_id))
-
-    else:
-        relationship_status = False
-        number_following = 0
-
-    return render(
-        request, "user_profile.html",
-        {"number_tweets": number_tweets,
-         "selected_user": selected_user,
-         "user_tweets": user_tweets,
-         "profile_user": selected_user,
-         "number_notifications": number_notifications,
-         "relationship_status": relationship_status,
-         "number_following": number_following}
-    )
-
-
-def add_relationship(request, to_person):
-    person_user = TwitterUser.objects.filter(username=to_person).first()
-    Relationship.objects.create(
-        from_person=request.user,
-        to_person=person_user
-    )
-    return HttpResponseRedirect(reverse("userview", args=[person_user.id]))
+            relationship_status = False
+            number_following = 0
+        return render(
+            request, "user_profile.html",
+            {"number_tweets": number_tweets,
+             "selected_user": selected_user,
+             "user_tweets": user_tweets,
+             "profile_user": selected_user,
+             "number_notifications": number_notifications,
+             "relationship_status": relationship_status,
+             "number_following": number_following}
+        )
 
 
 class AddRelationship(View):
@@ -113,12 +101,14 @@ class AddRelationship(View):
         return HttpResponseRedirect(reverse("userview", args=[person_user.id]))
 
 
-def remove_relationship(request, to_person):
-    person_user = TwitterUser.objects.filter(username=to_person).first()
-    relationship_to_delete = Relationship.objects.filter(
-        from_person=request.user,
-        to_person=person_user
-    )
-    relationship_to_delete.delete()
+class RemoveRelationship(View):
 
-    return HttpResponseRedirect(reverse("userview", args=[person_user.id]))
+    def get(self, request, to_person):
+        person_user = TwitterUser.objects.filter(username=to_person).first()
+        relationship_to_delete = Relationship.objects.filter(
+            from_person=request.user,
+            to_person=person_user
+        )
+        relationship_to_delete.delete()
+
+        return HttpResponseRedirect(reverse("userview", args=[person_user.id]))
