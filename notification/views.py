@@ -21,7 +21,6 @@ def notification_view(request, user_id):
         user_notifications.delete()
         return ''
 
-    # user_notifications.delete()
     return render(
         request, "notifications.html",
         {"user_notifications": user_notifications,

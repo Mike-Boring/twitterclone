@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse
-
+from django.views.generic.base import View
 from django.contrib.auth.decorators import login_required
 from tweet.models import Tweet
 from twitteruser.models import TwitterUser
@@ -42,7 +42,6 @@ def index(request):
             notification_tweet = ''
 
         number_notifications = len(notification_tweet)
-    # breakpoint()
 
     return render(
         request, "index.html",
@@ -75,8 +74,12 @@ def user_detail_view(request, user_id):
     if Relationship.objects.filter(
             to_person=user_id, from_person=request.user):
         relationship_status = True
+        number_following = len(Relationship.objects.filter(
+            from_person=user_id))
+
     else:
         relationship_status = False
+        number_following = 0
 
     return render(
         request, "user_profile.html",
@@ -85,7 +88,8 @@ def user_detail_view(request, user_id):
          "user_tweets": user_tweets,
          "profile_user": selected_user,
          "number_notifications": number_notifications,
-         "relationship_status": relationship_status}
+         "relationship_status": relationship_status,
+         "number_following": number_following}
     )
 
 
@@ -96,7 +100,17 @@ def add_relationship(request, to_person):
         to_person=person_user
     )
     return HttpResponseRedirect(reverse("userview", args=[person_user.id]))
-    # return render(request, "/user/{person_user.id}/")
+
+
+class AddRelationship(View):
+
+    def get(self, request, to_person):
+        person_user = TwitterUser.objects.filter(username=to_person).first()
+        Relationship.objects.create(
+            from_person=request.user,
+            to_person=person_user
+        )
+        return HttpResponseRedirect(reverse("userview", args=[person_user.id]))
 
 
 def remove_relationship(request, to_person):

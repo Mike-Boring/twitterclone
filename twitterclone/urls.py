@@ -19,8 +19,10 @@ from django.urls import path
 from authentication.views import login_view, logout_view, signup_view
 from tweet.views import add_tweet_view, tweet_detail_view
 from twitteruser.views import (
-    index, user_detail_view, remove_relationship, add_relationship
+    index, user_detail_view, remove_relationship, add_relationship,
+    AddRelationship
 )
+
 from notification.views import notification_view
 
 urlpatterns = [
@@ -33,6 +35,8 @@ urlpatterns = [
          notification_view, name="notificationview"),
     path('user/addfollow/<str:to_person>',
          add_relationship, name="addrelationship"),
+    path('user/addfollow/<str:to_person>',
+         AddRelationship.as_view()),
     path('user/removefollow/<str:to_person>',
          remove_relationship, name="removerelationship"),
     path('signup/', signup_view, name='signupview'),
