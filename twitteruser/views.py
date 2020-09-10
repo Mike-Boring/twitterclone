@@ -74,17 +74,21 @@ class UserDetailView(View):
             if Relationship.objects.filter(from_person=request.user):
                 number_following = len(Relationship.objects.filter(
                     from_person=request.user))
+                relationship_status = True
 
             else:
                 number_following = 0
+                relationship_status = False
         else:
             if Relationship.objects.filter(
                     to_person=user_id, from_person=request.user):
                 number_following = len(Relationship.objects.filter(
                     from_person=user_id))
+                relationship_status = True
 
             else:
                 number_following = 0
+                relationship_status = False
         return render(
             request, "user_profile.html",
             {"number_tweets": number_tweets,
@@ -92,6 +96,7 @@ class UserDetailView(View):
              "user_tweets": user_tweets,
              "profile_user": selected_user,
              "number_notifications": number_notifications,
+             "relationship_status": relationship_status,
              "number_following": number_following}
         )
 
